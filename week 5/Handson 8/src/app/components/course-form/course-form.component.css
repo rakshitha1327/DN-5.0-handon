@@ -1,0 +1,33 @@
+.form-card {
+  margin-top: 2rem;
+  padding: 1.1rem 1.25rem 1.4rem;
+  background: var(--accent-dim);
+  border-radius: 8px;
+  border: 1px solid var(--line);
+}
+
+.form-card h3 { margin: 0 0 0.75rem; font-size: 1rem; }
+
+form { display: grid; gap: 0.7rem; }
+
+label { display: grid; gap: 0.25rem; font-size: 0.82rem; color: #4a453d; }
+
+input, textarea {
+  font-family: inherit;
+  font-size: 0.95rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+}
+
+button {
+  justify-self: start;
+  margin-top: 0.25rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1.1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}

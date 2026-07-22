@@ -1,0 +1,20 @@
+.course-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  background: #fff;
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.status.passed { background: #d4f7dc; color: #1a7431; }
+.status.in-progress { background: #fff3cd; color: #856404; }
+.status.failed { background: #f8d7da; color: #842029; }
+.status.not-started { background: #e2e3e5; color: #41464b; }

@@ -1,0 +1,18 @@
+{
+  "courses": [
+    { "id": 1, "title": "Angular Fundamentals", "instructor": "Priya Menon", "credits": 4, "description": "Components, templates, and data binding basics." },
+    { "id": 2, "title": "RxJS in Depth", "instructor": "Arjun Rao", "credits": 3, "description": "Observables, operators, and reactive patterns." },
+    { "id": 3, "title": "HTTP & APIs with Angular", "instructor": "Sara Thomas", "credits": 3, "description": "HttpClient, interceptors, and error handling." }
+  ],
+  "students": [
+    { "id": 1, "name": "Divya Iyer", "email": "divya.iyer@example.com" },
+    { "id": 2, "name": "Karthik Subramaniam", "email": "karthik.s@example.com" },
+    { "id": 3, "name": "Meera Nair", "email": "meera.nair@example.com" }
+  ],
+  "enrollments": [
+    { "id": 1, "courseId": 1, "studentId": 1 },
+    { "id": 2, "courseId": 1, "studentId": 2 },
+    { "id": 3, "courseId": 2, "studentId": 3 },
+    { "id": 4, "courseId": 3, "studentId": 1 }
+  ]
+}

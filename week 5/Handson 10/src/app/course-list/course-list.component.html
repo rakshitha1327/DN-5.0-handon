@@ -1,0 +1,9 @@
+<div class="course-list">
+  <div *ngIf="loading$ | async" class="loading-indicator">Loading courses…</div>
+
+  <app-course-card
+    *ngFor="let course of courses$ | async"
+    [course]="course"
+    (enrollRequested)="onEnroll($event)">
+  </app-course-card>
+</div>

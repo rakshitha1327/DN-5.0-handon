@@ -1,0 +1,30 @@
+<section>
+  <h2>Courses</h2>
+
+  @if (errorMessage) {
+    <p class="error">{{ errorMessage }}
+      <button (click)="loadCourses()">Retry</button>
+    </p>
+  }
+
+  @if (isLoading) {
+    <p class="muted">Loading courses…</p>
+  } @else if (!errorMessage && courses.length === 0) {
+    <p class="muted">No courses yet. Add one below.</p>
+  }
+
+  <ul class="course-list">
+    @for (course of courses; track course.id) {
+      <li class="course-card">
+        <div>
+          <a [routerLink]="['/courses', course.id]" class="course-title">{{ course.title }}</a>
+          <p class="meta">{{ course.instructor }} · {{ course.credits }} credits</p>
+          <p class="desc">{{ course.description }}</p>
+        </div>
+        <button class="danger" (click)="onDeleteCourse(course.id)">Delete</button>
+      </li>
+    }
+  </ul>
+</section>
+
+<app-course-form (createCourse)="onCreateCourse($event)"></app-course-form>

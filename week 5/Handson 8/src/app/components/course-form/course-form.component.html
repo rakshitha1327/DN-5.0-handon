@@ -1,0 +1,22 @@
+<section class="form-card">
+  <h3>Add a course</h3>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>
+      Title
+      <input formControlName="title" type="text" placeholder="e.g. Signals and Systems" />
+    </label>
+    <label>
+      Instructor
+      <input formControlName="instructor" type="text" placeholder="e.g. Ananya Deshpande" />
+    </label>
+    <label>
+      Credits
+      <input formControlName="credits" type="number" min="0" />
+    </label>
+    <label>
+      Description
+      <textarea formControlName="description" rows="2" placeholder="Short course summary"></textarea>
+    </label>
+    <button type="submit">Add course</button>
+  </form>
+</section>

@@ -1,0 +1,16 @@
+.back { display: inline-block; margin-bottom: 1rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+
+.meta { color: #6b6459; font-size: 0.85rem; }
+
+.student-list { list-style: none; padding: 0; display: grid; gap: 0.5rem; }
+.student-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+
+.muted { color: #6b6459; }
+.error { color: var(--danger); }

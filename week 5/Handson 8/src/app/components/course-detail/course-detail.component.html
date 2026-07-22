@@ -1,0 +1,25 @@
+<a routerLink="/" class="back">&larr; All courses</a>
+
+@if (isLoading) {
+  <p class="muted">Loading…</p>
+} @else if (errorMessage) {
+  <p class="error">{{ errorMessage }}</p>
+} @else if (course) {
+  <h2>{{ course.title }}</h2>
+  <p class="meta">{{ course.instructor }} · {{ course.credits }} credits</p>
+  <p>{{ course.description }}</p>
+
+  <h3>Enrolled students</h3>
+  @if (students.length === 0) {
+    <p class="muted">No students enrolled yet.</p>
+  } @else {
+    <ul class="student-list">
+      @for (student of students; track student.id) {
+        <li>
+          <strong>{{ student.name }}</strong>
+          <span class="meta">{{ student.email }}</span>
+        </li>
+      }
+    </ul>
+  }
+}
