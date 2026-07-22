@@ -1,0 +1,57 @@
+.home {
+  padding: 2rem;
+}
+
+.stats-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  min-width: 140px;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.enroll-section,
+.search-section {
+  margin-top: 1.5rem;
+}
+
+.enroll-section button {
+  padding: 0.5rem 1.25rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.enroll-section button:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.search-section input {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  width: 260px;
+}

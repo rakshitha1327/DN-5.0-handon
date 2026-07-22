@@ -1,0 +1,83 @@
+.course-card {
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid transparent;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  min-width: 220px;
+  transition: max-height 0.2s ease;
+}
+
+.course-code,
+.course-credits,
+.course-id {
+  margin: 0.25rem 0;
+  color: #475569;
+  font-size: 0.9rem;
+}
+
+/* Attribute directive target classes (applied via [ngClass]) */
+.card--enrolled {
+  background-color: #ecfdf5;
+  box-shadow: 0 0 0 1px #34d399 inset;
+}
+
+.card--full {
+  border-top: 3px solid #f59e0b;
+}
+
+.expanded {
+  padding-bottom: 1.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.4rem;
+}
+
+.badge--passed {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.badge--failed {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.badge--pending {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.course-details {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.card-actions button {
+  padding: 0.4rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card-actions button:not(.secondary) {
+  background-color: #16a34a;
+  color: #fff;
+}
+
+.card-actions button.secondary {
+  background-color: #e2e8f0;
+  color: #1e293b;
+}

@@ -1,0 +1,209 @@
+Student Course Portal — Project File Notes
+============================================
+
+1. angular.json
+   The Angular workspace configuration file — defines projects, build targets
+   (build/serve/test), file replacements, asset paths, and budget limits used
+   by the Angular CLI to compile and run the app.
+
+2. tsconfig.json
+   The root TypeScript configuration shared across the whole workspace —
+   sets compiler options (target, strict mode, module resolution) that all
+   other tsconfig files (app/spec) extend from.
+
+3. tsconfig.app.json
+   Extends tsconfig.json specifically for the application build — lists the
+   files/entry points to include (main.ts) and excludes test (*.spec.ts) files.
+
+4. package.json
+   Lists the project's npm dependencies (Angular packages, RxJS, etc.),
+   devDependencies (CLI, TypeScript, testing tools), and the npm scripts
+   (ng serve, ng build, ng test) used to run common CLI commands.
+
+5. src/main.ts
+   The application's entry point — it bootstraps the root standalone
+   component (App) using bootstrapApplication() and the providers defined
+   in app.config.ts (this replaces the older AppModule/platformBrowserDynamic
+   bootstrap approach).
+
+6. src/app/app.config.ts (standalone mode equivalent of app.module.ts)
+   Defines the application-wide providers (router, zone change detection,
+   HTTP client, etc.) passed into bootstrapApplication() — this is the
+   standalone-API replacement for the old NgModule-based AppModule.
+
+7. src/app/app.ts (standalone equivalent of app.component.ts)
+   The root component of the app — its selector (app-root) is what's placed
+   in index.html, and its template (app.html) hosts the <app-header> and
+   <router-outlet> that render the rest of the application.
+   Note: In this Angular CLI version (v20.x) the default schematic drops the
+   ".component" suffix from generated filenames/class names, so what earlier
+   Angular versions called app.component.ts/AppComponent is now generated as
+   app.ts/App — same role, updated naming convention.
+
+8. src/index.html
+   The single real HTML page served to the browser — contains the
+   <app-root></app-root> tag where Angular bootstraps and renders the entire
+   single-page application.
+
+Additional exploration notes
+-----------------------------
+- ng serve: compiles the app in memory and serves it via a dev server at
+  http://localhost:4200 with live reload. Verified the default Angular
+  welcome page loaded successfully before components were added.
+
+- ng build: produces a dist/student-course-portal/browser/ folder. The
+  compiled application logic lives in the hashed main-<hash>.js bundle
+  (application code), alongside polyfills-<hash>.js (browser polyfills),
+  styles-<hash>.css (global styles), and index.html/index.csr.html which
+  reference those bundles.
+
+- angular.json budgets (architect > build > configurations > production):
+  Under the "budgets" array, entries like:
+    { "type": "initial", "maximumWarning": "500kB", "maximumError": "1MB" }
+  control the maximum allowed size of the compiled output bundles.
+  - maximumWarning: if the bundle exceeds this size, the CLI prints a
+    build warning but the build still succeeds.
+  - maximumError: if the bundle exceeds this size, the CLI fails the build
+    with an error, forcing you to reduce bundle size before shipping.
+  These budgets exist to catch bundle-size regressions before they reach
+  production.
+
+---
+
+Hands-On 2 additions (Binding Types, Lifecycle Hooks, @Input/@Output)
+-----------------------------------------------------------------------
+- HomeComponent (home.ts / home.html) now demonstrates all four binding
+  types: interpolation ({{ portalName }}), property binding
+  ([disabled]="!isPortalActive"), event binding ((click)="onEnrollClick()"),
+  and two-way binding ([(ngModel)]="searchTerm", requires FormsModule).
+  A code comment in home.ts explains [property] vs [(ngModel)].
+
+- HomeComponent implements ngOnInit (simulates loading the available
+  courses count, logs "HomeComponent initialised — courses loaded") and
+  ngOnDestroy (logs "HomeComponent destroyed"). Navigating from Home to
+  another route and back shows both logs in the browser console.
+
+- New CourseCardComponent (components/course-card) takes @Input() course
+  and implements ngOnChanges(changes: SimpleChanges), logging the previous
+  and current course value whenever the input changes. It also exposes
+  @Output() enrollRequested = new EventEmitter<number>(), emitted when the
+  "Enroll" button is clicked.
+
+- CourseListComponent defines a `courses` array of 5 hardcoded course
+  objects and renders one <app-course-card> per course with *ngFor,
+  binding [course]="c" (down) and (enrollRequested)="onEnroll($event)" (up).
+  This single array-driven render satisfies both the "3 cards" check from
+  Task 2 (verify ngOnChanges fires once per card on init) and the "5 cards"
+  requirement from Task 3 — just watch the console for 5 ngOnChanges logs
+  on first load.
+
+- onEnroll(courseId) logs "Enrolling in course: <id>" and sets
+  selectedCourseId, displayed via <p *ngIf="selectedCourseId">.
+
+Verified: `ng build` compiles with no errors, and `ng serve` boots and
+serves index.html correctly with the above wired in.
+
+---
+
+Hands-On 3 additions (Directives & Pipes)
+--------------------------------------------
+Task 1 — Structural directives (course-list.ts / .html):
+- isLoading starts true; ngOnInit uses setTimeout(1500ms) to flip it to
+  false, simulating an async fetch. *ngIf toggles between the loading
+  message and the course grid.
+- *ngFor renders course cards with `trackBy: trackByCourseId`, which
+  returns course.id. Comment in course-list.ts explains why: without
+  trackBy, Angular treats every array item as new on any change and
+  re-renders the whole list; with trackBy it only touches items whose id
+  actually changed.
+- *ngIf/else with <ng-template #noCourses> shows "No courses available."
+  only when courses.length === 0. Note: the else branch is never inserted
+  into the DOM while the primary branch renders (unlike display:none, which
+  keeps the element in the DOM just hidden).
+- Each Course now has a gradeStatus ('passed' | 'failed' | 'pending').
+  CourseCardComponent uses *ngSwitch/*ngSwitchCase to render a green
+  "Passed", red "Failed", or grey "Pending" badge.
+
+Task 2 — Attribute directives, ngClass / ngStyle (course-card.ts / .html):
+- [ngClass]="cardClasses" applies 'card--enrolled' (when course.enrolled)
+  and 'card--full' (when credits >= 4); both classes defined in
+  course-card.css.
+- [ngStyle]="borderStyle" sets the card's left border colour from
+  gradeStatus (green/red/grey) — used ngStyle here specifically because the
+  colour value is fully dynamic/data-driven and doesn't map onto a small
+  fixed set of classes, per the "prefer ngClass, reserve ngStyle for truly
+  dynamic values" guidance.
+- isExpanded is toggled by a "Show Details" button; 'expanded' is included
+  in the same cardClasses object, so [ngClass] handles all three
+  conditional classes together.
+- cardClasses is a getter (not an inline object literal in the template).
+  Comment explains why: it keeps the template declarative/readable, moves
+  the conditional logic into the component class where it's unit-testable,
+  and avoids re-creating a fresh object literal expression tree in the
+  template on every check.
+
+Task 3 — Custom directive & custom pipe:
+- directives/highlight.ts: Highlight directive, selector [appHighlight].
+  Uses @HostListener('mouseenter') / @HostListener('mouseleave') to set/
+  clear the host element's background colour via ElementRef — Angular
+  attaches/detaches these listeners automatically, no manual cleanup code
+  needed. @Input() appHighlight = 'yellow' lets callers override the colour
+  by binding the same name as the selector, e.g.
+  <app-course-card appHighlight="lightblue">, used in course-list.html.
+- pipes/credit-label-pipe.ts: CreditLabelPipe (name: 'creditLabel')
+  transforms a credits number into '1 Credit' / 'N Credits', returning
+  'No Credits' for null/undefined/0. Used in course-card.html as
+  {{ course.credits | creditLabel }}. Left as a pure pipe (default) since
+  it only depends on an immutable number input — pure: false was not
+  needed and would only add unnecessary re-checks.
+
+Verified: `ng build` compiles cleanly and `ng serve` boots correctly with
+all of the above wired together.
+
+---
+
+Hands-On 4 additions (Template-Driven Forms)
+------------------------------------------------
+Naming note: this project uses standalone components (no NgModules), so
+there is no app-routing.module.ts — the route for the form was added to
+the existing src/app/app.routes.ts instead (same role: registers
+`{ path: 'enroll', component: EnrollmentForm }`). A nav link to /enroll was
+also added to header.html.
+
+Task 1 — Building the form (enrollment-form.ts / .html):
+- FormsModule is imported in EnrollmentForm's standalone `imports` array
+  (the standalone equivalent of adding it to an NgModule's imports) so that
+  ngModel and ngForm are available in the template.
+- <form #enrollForm="ngForm" (ngSubmit)="onSubmit(enrollForm)"> wraps all
+  fields. Every control has a `name` attribute (mandatory for
+  template-driven forms — Angular uses it as the key in form.value) and a
+  [(ngModel)] binding: studentName (text), studentEmail (email), courseId
+  (number), preferredSemester (select: Odd/Even), agreeToTerms (checkbox).
+- onSubmit(form: NgForm) logs form.value (an object keyed by each control's
+  `name`) and form.valid to the console.
+- The Submit button is bound to [disabled]="enrollForm.invalid".
+
+Task 2 — Validation & error messages:
+- Validators added as plain HTML attributes: required + minlength="3" on
+  studentName, required + email on studentEmail, required on courseId,
+  required on preferredSemester's select, required on the agreeToTerms
+  checkbox.
+- Each control exposes a template reference variable (#nameCtrl="ngModel",
+  #emailCtrl="ngModel", etc.) so its .touched/.errors state can be read
+  directly in *ngIf conditions for contextual error messages, e.g.
+  *ngIf="nameCtrl.touched && nameCtrl.errors?.['required']".
+  touched (not dirty) is used deliberately — touched only becomes true
+  after the user leaves the field, so errors don't appear while the user
+  is still typing; dirty would fire on the very first keystroke.
+- enrollment-form.css styles Angular's auto-applied state classes directly:
+  .ng-invalid.ng-touched { border-color: red; } and
+  .ng-valid.ng-touched { border-color: green; }.
+- `submitted` boolean is set true in onSubmit() only when form.valid, and
+  drives a *ngIf success message ("Enrollment request submitted
+  successfully!").
+- A Reset button calls enrollForm.resetForm() via onReset(form), which
+  clears all values and resets every control back to pristine/untouched
+  (also resets the local `submitted` flag).
+
+Verified: `ng build` compiles cleanly, `ng serve` boots, and both `/` and
+`/enroll` routes return 200.

@@ -1,0 +1,28 @@
+<section class="course-list">
+  <h2>Course List</h2>
+
+  <!-- *ngIf shows the loading message while isLoading is true -->
+  <p *ngIf="isLoading">Loading courses...</p>
+
+  <!-- Shown once loading completes; *ngIf/else renders #noCourses when the
+       courses array is empty (the else template is never in the DOM while
+       the "then" branch is active, unlike CSS display:none). -->
+  <ng-container *ngIf="!isLoading">
+    <ng-container *ngIf="courses.length > 0; else noCourses">
+      <div class="cards">
+        <app-course-card
+          *ngFor="let course of courses; let i = index; trackBy: trackByCourseId"
+          appHighlight="lightblue"
+          [course]="course"
+          (enrollRequested)="onEnroll($event)"
+        ></app-course-card>
+      </div>
+    </ng-container>
+
+    <ng-template #noCourses>
+      <p>No courses available.</p>
+    </ng-template>
+  </ng-container>
+
+  <p *ngIf="selectedCourseId">Selected course ID: {{ selectedCourseId }}</p>
+</section>
