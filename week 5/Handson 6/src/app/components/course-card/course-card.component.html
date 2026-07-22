@@ -1,0 +1,18 @@
+<article class="course-card" [class.course-card--enrolled]="isEnrolled">
+  <header class="course-card__header">
+    <span class="course-card__code">{{ course.code }}</span>
+    <span class="course-card__status" [ngClass]="'status--' + course.gradeStatus">
+      {{ course.gradeStatus }}
+    </span>
+  </header>
+
+  <h3 class="course-card__name">{{ course.name }}</h3>
+  <p class="course-card__credits">{{ course.credits }} credits</p>
+
+  <button
+    class="btn"
+    [class.btn--enrolled]="isEnrolled"
+    (click)="toggleEnrollment()">
+    {{ buttonLabel }}
+  </button>
+</article>

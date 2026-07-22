@@ -1,0 +1,16 @@
+<div class="notification">
+  <div class="notification__header">
+    <h4>Notifications (instance-scoped)</h4>
+    <div class="notification__actions">
+      <button class="btn btn--sm" (click)="addMessage('Reminder: check your enrolled courses')">Add sample</button>
+      <button class="btn btn--sm btn--ghost" (click)="clear()">Clear</button>
+    </div>
+  </div>
+
+  <ul class="notification__list" *ngIf="messages.length; else none">
+    <li *ngFor="let msg of messages">{{ msg }}</li>
+  </ul>
+  <ng-template #none>
+    <p class="notification__empty">No notifications in this instance.</p>
+  </ng-template>
+</div>

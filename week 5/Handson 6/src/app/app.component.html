@@ -1,0 +1,18 @@
+<main class="portal">
+  <h1>{{ title }}</h1>
+
+  <!-- Task 1: Home stats read live course count from CourseService -->
+  <app-home></app-home>
+
+  <!-- Task 2: NotificationComponent has its own component-scoped service instance -->
+  <app-notification></app-notification>
+
+  <!-- Task 1: CourseListComponent reads/writes CourseService -->
+  <app-course-list></app-course-list>
+
+  <!-- Task 1: independent component proving the CourseService singleton is shared -->
+  <app-course-summary-widget></app-course-summary-widget>
+
+  <!-- Task 2: shows EnrollmentService state, updated by CourseCardComponent above -->
+  <app-student-profile></app-student-profile>
+</main>

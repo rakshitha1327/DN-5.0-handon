@@ -1,0 +1,10 @@
+<section class="course-list">
+  <div class="course-list__header">
+    <h2>My Courses ({{ courses.length }})</h2>
+    <button class="btn btn--primary" (click)="addSampleCourse()">+ Add Sample Course</button>
+  </div>
+
+  <div class="course-list__grid">
+    <app-course-card *ngFor="let course of courses" [course]="course"></app-course-card>
+  </div>
+</section>

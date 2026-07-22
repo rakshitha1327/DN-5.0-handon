@@ -1,0 +1,20 @@
+.profile {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  margin-top: 1.5rem;
+}
+
+.profile__list {
+  list-style: none;
+  padding: 0;
+}
+
+.profile__list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.profile__empty {
+  color: #6b7280;
+  font-style: italic;
+}
