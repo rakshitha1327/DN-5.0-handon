@@ -1,0 +1,13 @@
+<section class="course-list">
+  <h2>Course List</h2>
+
+  <div class="cards">
+    <app-course-card
+      *ngFor="let c of courses"
+      [course]="c"
+      (enrollRequested)="onEnroll($event)"
+    ></app-course-card>
+  </div>
+
+  <p *ngIf="selectedCourseId">Selected course ID: {{ selectedCourseId }}</p>
+</section>

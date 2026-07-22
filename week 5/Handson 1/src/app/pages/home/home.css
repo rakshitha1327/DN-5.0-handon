@@ -1,0 +1,31 @@
+.home {
+  padding: 2rem;
+}
+
+.stats-row {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-radius: 8px;
+  background-color: #f1f5f9;
+  min-width: 140px;
+}
+
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #64748b;
+}

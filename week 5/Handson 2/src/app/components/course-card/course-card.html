@@ -1,0 +1,9 @@
+<div class="course-card">
+  <h3>{{ course.name }}</h3>
+  <p class="course-code">{{ course.code }}</p>
+  <p class="course-credits">Credits: {{ course.credits }}</p>
+  <p class="course-id">Course ID: {{ course.id }}</p>
+
+  <!-- Emits the course id upward via the @Output() EventEmitter -->
+  <button (click)="onEnrollClick()">Enroll</button>
+</div>

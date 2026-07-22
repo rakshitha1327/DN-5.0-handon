@@ -1,0 +1,40 @@
+<section class="home">
+  <!-- Interpolation: renders the component property as text -->
+  <h1>{{ portalName }}</h1>
+
+  <p>
+    Browse available courses, track the ones you're enrolled in, and keep an
+    eye on your academic progress — all from one place.
+  </p>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-value">{{ availableCoursesCount }}</span>
+      <span class="stat-label">Courses Available</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">3</span>
+      <span class="stat-label">Enrolled</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value">3.8</span>
+      <span class="stat-label">GPA</span>
+    </div>
+  </div>
+
+  <div class="enroll-section">
+    <!-- Property binding: [disabled] one-way, component -> DOM -->
+    <!-- Event binding: (click) DOM event -> component method -->
+    <button [disabled]="!isPortalActive" (click)="onEnrollClick()">
+      Enroll Now
+    </button>
+    <p *ngIf="message">{{ message }}</p>
+  </div>
+
+  <div class="search-section">
+    <label for="search">Search courses:</label>
+    <!-- Two-way binding: keeps searchTerm and the input's value in sync -->
+    <input id="search" type="text" [(ngModel)]="searchTerm" placeholder="Search courses..." />
+    <p>Searching for: {{ searchTerm }}</p>
+  </div>
+</section>
